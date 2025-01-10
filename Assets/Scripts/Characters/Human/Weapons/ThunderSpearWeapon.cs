@@ -47,7 +47,8 @@ namespace Characters
                 else
                     spawnPosition = human.Setup._part_blade_l.transform.position;
                 human.PlaySound(HumanSounds.GetRandomTSLaunch());
-                human.SetThunderspears(false, hasRight || !twoShot);
+                if(RoundLeft < 2)
+                    human.SetThunderspears(false, hasRight || !twoShot);
                 if (human.Grounded)
                     human.AttackAnimation = HumanAnimations.TSShootL;
                 else
@@ -60,7 +61,8 @@ namespace Characters
                 else
                     spawnPosition = human.Setup._part_blade_r.transform.position;
                 human.PlaySound(HumanSounds.GetRandomTSLaunch());
-                human.SetThunderspears(hasLeft || !twoShot, false);
+                if (RoundLeft <= 2)
+                    human.SetThunderspears(hasLeft || !twoShot, false);
                 if (human.Grounded)
                     human.AttackAnimation = HumanAnimations.TSShootR;
                 else
@@ -168,7 +170,7 @@ namespace Characters
         {
             base.Reset();
             var human = (Human)_owner;
-            RoundLeft = 2;
+            RoundLeft = SettingsManager.InGameCurrent.Misc.TSSpecial.Value;
             human.SetThunderspears(true, true);
         }
     }
