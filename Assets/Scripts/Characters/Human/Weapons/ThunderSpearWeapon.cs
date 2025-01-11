@@ -28,6 +28,8 @@ namespace Characters
             TravelTime = travelTime;
             Delay = delay;
             TSInfo = tsInfo;
+            var human = (Human)_owner;
+            human.ChangeHeldAmmo(RoundLeft, false, true);
         }
 
         protected override void Activate()
@@ -47,7 +49,7 @@ namespace Characters
                 else
                     spawnPosition = human.Setup._part_blade_l.transform.position;
                 human.PlaySound(HumanSounds.GetRandomTSLaunch());
-                if(RoundLeft < 2)
+                if(RoundLeft <= 2)
                     human.SetThunderspears(false, hasRight || !twoShot);
                 if (human.Grounded)
                     human.AttackAnimation = HumanAnimations.TSShootL;
@@ -96,6 +98,11 @@ namespace Characters
             Current.InitialPlayerVelocity = initialVelocity;
             _delayTimeLeft = Delay;
             ((InGameMenu)UIManager.CurrentMenu).HUDBottomHandler.ShootTS();
+            Debug.Log(RoundLeft);
+            if (RoundLeft-1 >= 2)
+            {
+                human.ChangeHeldAmmo(RoundLeft-1, false, true);
+            }
         }
 
         public bool HasActiveProjectile()

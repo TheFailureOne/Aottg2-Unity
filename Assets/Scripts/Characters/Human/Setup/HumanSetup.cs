@@ -35,6 +35,18 @@ namespace Characters
         public GameObject _part_arm_l;
         public GameObject _part_arm_r;
         public GameObject _part_blade_l;
+        public GameObject _part_heldBlade1_l;
+        public GameObject _part_heldBlade2_l;
+        public GameObject _part_heldBlade3_l;
+        public GameObject _part_heldBlade1_r;
+        public GameObject _part_heldBlade2_r;
+        public GameObject _part_heldBlade3_r;
+        public GameObject _part_tsStandBy1_l;
+        public GameObject _part_tsStandBy2_l;
+        public GameObject _part_tsStandBy3_l;
+        public GameObject _part_tsStandBy1_r;
+        public GameObject _part_tsStandBy2_r;
+        public GameObject _part_tsStandBy3_r;
         public GameObject _part_blade_r;
         public GameObject _part_ts_l;
         public GameObject _part_ts_r;
@@ -260,6 +272,18 @@ namespace Characters
             DestroyIfExists(_part_blade_r);
             DestroyIfExists(_part_ts_l);
             DestroyIfExists(_part_ts_r);
+            DestroyIfExists(_part_heldBlade1_l);
+            DestroyIfExists(_part_heldBlade1_r);
+            DestroyIfExists(_part_heldBlade2_l);
+            DestroyIfExists(_part_heldBlade2_r);
+            DestroyIfExists(_part_heldBlade3_l);
+            DestroyIfExists(_part_heldBlade3_r);
+            DestroyIfExists(_part_tsStandBy1_l);
+            DestroyIfExists(_part_tsStandBy1_r);
+            DestroyIfExists(_part_tsStandBy2_l);
+            DestroyIfExists(_part_tsStandBy2_r);
+            DestroyIfExists(_part_tsStandBy3_l);
+            DestroyIfExists(_part_tsStandBy3_r);
             DestroyIfExists(_part_back);
             DestroyIfExists(_part_hat);
             DestroyIfExists(_part_head_decor);
@@ -284,6 +308,27 @@ namespace Characters
             }
             _part_gas_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, _meshes.GetGasMesh(left: true), cached: true);
             _part_gas_l.GetComponent<Renderer>().material = material;
+            if(Weapon == HumanWeapon.Blade)
+            {
+                _part_heldBlade1_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeL1", cached: true);
+                _part_heldBlade2_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeL2", cached: true);
+                _part_heldBlade3_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeL3", cached: true);
+                _part_heldBlade1_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeR1", cached: true);
+                _part_heldBlade2_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeR2", cached: true);
+                _part_heldBlade3_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeR3", cached: true);
+                AttachToMount(_part_heldBlade1_l, _mount_gas_l);
+                AttachToMount(_part_heldBlade2_l, _mount_gas_l);
+                AttachToMount(_part_heldBlade3_l, _mount_gas_l);
+                AttachToMount(_part_heldBlade1_r, _mount_gas_r);
+                AttachToMount(_part_heldBlade2_r, _mount_gas_r);
+                AttachToMount(_part_heldBlade3_r, _mount_gas_r);
+                _part_heldBlade1_l.GetComponent<Renderer>().material = material;
+                _part_heldBlade2_l.GetComponent<Renderer>().material = material;
+                _part_heldBlade3_l.GetComponent<Renderer>().material = material;
+                _part_heldBlade1_r.GetComponent<Renderer>().material = material;
+                _part_heldBlade2_r.GetComponent<Renderer>().material = material;
+                _part_heldBlade3_r.GetComponent<Renderer>().material = material;
+            }
             if (Weapon == HumanWeapon.AHSS || Weapon == HumanWeapon.APG)
                 AttachToMount(_part_gas_l, _mount_gun_mag_l);
             else
@@ -307,10 +352,38 @@ namespace Characters
             if (weaponLMesh != string.Empty)
             {
                 _part_blade_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, weaponLMesh, cached: true);
-                if(Special == "Thunderspears")
+                if (Special == "Thunderspears")
+                {
                     _part_ts_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Weapons/Prefabs/thunderspear_l", cached: true);
-                if (weaponLMesh.Contains("thunderspear"))
+                    _part_tsStandBy1_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_3", cached: true);
+                    _part_tsStandBy1_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_4", cached: true);
+                    _part_tsStandBy2_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_5", cached: true);
+                    _part_tsStandBy2_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_6", cached: true);
+                    _part_tsStandBy3_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_7", cached: true);
+                    _part_tsStandBy3_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_8", cached: true);
+                    AttachToMount(_part_tsStandBy1_l, _mount_ts_l);
+                    AttachToMount(_part_tsStandBy1_r, _mount_ts_r);
+                    AttachToMount(_part_tsStandBy2_l, _mount_ts_l);
+                    AttachToMount(_part_tsStandBy2_r, _mount_ts_r);
+                    AttachToMount(_part_tsStandBy3_l, _mount_ts_l);
+                    AttachToMount(_part_tsStandBy3_r, _mount_ts_r);
+
+                }
+                if (weaponLMesh.Contains("thunderspear")) { 
                     AttachToMount(_part_blade_l, _mount_ts_l);
+                    _part_tsStandBy1_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_3", cached: true);
+                    _part_tsStandBy1_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_4", cached: true);
+                    _part_tsStandBy2_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_5", cached: true);
+                    _part_tsStandBy2_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_6", cached: true);
+                    _part_tsStandBy3_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_7", cached: true);
+                    _part_tsStandBy3_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_8", cached: true);
+                    AttachToMount(_part_tsStandBy1_l, _mount_ts_l);
+                    AttachToMount(_part_tsStandBy1_r, _mount_ts_r);
+                    AttachToMount(_part_tsStandBy2_l, _mount_ts_l);
+                    AttachToMount(_part_tsStandBy2_r, _mount_ts_r);
+                    AttachToMount(_part_tsStandBy3_l, _mount_ts_l);
+                    AttachToMount(_part_tsStandBy3_r, _mount_ts_r);
+                }
                 else
                 {
                     AttachToMount(_part_blade_l, _mount_weapon_l);
