@@ -103,6 +103,10 @@ namespace Characters
             {
                 human.ChangeHeldAmmo(RoundLeft-1, false, true);
             }
+            if(RoundLeft-1 == 0)
+            {
+                human.SetThunderspears(false, false);
+            }
         }
 
         public bool HasActiveProjectile()
