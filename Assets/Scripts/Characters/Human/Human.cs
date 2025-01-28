@@ -829,12 +829,14 @@ namespace Characters
         public void ResetHeldAmmo(bool isBlade)
         {
             if (isBlade) {
-                ToggleActive(Setup._part_heldBlade1_l, false);
-                ToggleActive(Setup._part_heldBlade1_r, false);
-                ToggleActive(Setup._part_heldBlade2_l, false);
-                ToggleActive(Setup._part_heldBlade2_r, false);
-                ToggleActive(Setup._part_heldBlade3_l, false);
-                ToggleActive(Setup._part_heldBlade3_r, false);
+                if (Setup.CurrentODM["Type"] == "Second Gen ODM") { 
+                    ToggleActive(Setup._part_heldBlade1_l, false);
+                    ToggleActive(Setup._part_heldBlade1_r, false);
+                    ToggleActive(Setup._part_heldBlade2_l, false);
+                    ToggleActive(Setup._part_heldBlade2_r, false);
+                    ToggleActive(Setup._part_heldBlade3_l, false);
+                    ToggleActive(Setup._part_heldBlade3_r, false);
+                }
             }
             else
             {
@@ -849,27 +851,29 @@ namespace Characters
 
         public void ChangeHeldAmmo(int AmmoLeft, bool isBlade, bool isRemove)
         {
-            if (isBlade) { 
-                if (AmmoLeft == 2)
-                {
-                    ToggleActive(Setup._part_heldBlade1_l, isRemove);
-                    ToggleActive(Setup._part_heldBlade1_r, isRemove);
-                }
-                else if (AmmoLeft == 1)
-                {
-                    ToggleActive(Setup._part_heldBlade1_l, isRemove);
-                    ToggleActive(Setup._part_heldBlade1_r, isRemove);
-                    ToggleActive(Setup._part_heldBlade2_l, isRemove);
-                    ToggleActive(Setup._part_heldBlade2_r, isRemove);
-                }
-                else if (AmmoLeft == 0)
-                {
-                    ToggleActive(Setup._part_heldBlade1_l, isRemove);
-                    ToggleActive(Setup._part_heldBlade1_r, isRemove);
-                    ToggleActive(Setup._part_heldBlade2_l, isRemove);
-                    ToggleActive(Setup._part_heldBlade2_r, isRemove);
-                    ToggleActive(Setup._part_heldBlade3_l, isRemove);
-                    ToggleActive(Setup._part_heldBlade3_r, isRemove);
+            if (isBlade) {
+                if (Setup.CurrentODM["Type"] == "Second Gen ODM") { 
+                    if (AmmoLeft == 2)
+                    {
+                        ToggleActive(Setup._part_heldBlade1_l, isRemove);
+                        ToggleActive(Setup._part_heldBlade1_r, isRemove);
+                    }
+                    else if (AmmoLeft == 1)
+                    {
+                        ToggleActive(Setup._part_heldBlade1_l, isRemove);
+                        ToggleActive(Setup._part_heldBlade1_r, isRemove);
+                        ToggleActive(Setup._part_heldBlade2_l, isRemove);
+                        ToggleActive(Setup._part_heldBlade2_r, isRemove);
+                    }
+                    else if (AmmoLeft == 0)
+                    {
+                        ToggleActive(Setup._part_heldBlade1_l, isRemove);
+                        ToggleActive(Setup._part_heldBlade1_r, isRemove);
+                        ToggleActive(Setup._part_heldBlade2_l, isRemove);
+                        ToggleActive(Setup._part_heldBlade2_r, isRemove);
+                        ToggleActive(Setup._part_heldBlade3_l, isRemove);
+                        ToggleActive(Setup._part_heldBlade3_r, isRemove);
+                    }
                 }
             }
             else{

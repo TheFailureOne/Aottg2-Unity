@@ -14,6 +14,7 @@ namespace Characters
     {
         public static JSONNode CostumeInfo;
         public static JSONNode HairInfo;
+        public static JSONNode ODMInfo;
         public static Material WeaponTrailMaterial;
         public GameObject _mount_chest;
         public GameObject _mount_3dmg;
@@ -83,6 +84,7 @@ namespace Characters
         public HumanWeapon Weapon;
         public JSONNode CurrentCostume;
         public JSONNode CurrentHair;
+        public JSONNode CurrentODM;
         public bool IsDeadBody;
         public bool Deleted = false;
 
@@ -95,6 +97,7 @@ namespace Characters
         public static int HairMCount;
         public static int HairFCount;
         public static int BackCount;
+        public static int ODMCount;
         public static int HeadCount;
         public static int HatCount;
         public static string Special;
@@ -104,10 +107,12 @@ namespace Characters
             JSONNode costume = JSON.Parse(ResourceManager.TryLoadText(ResourcePaths.Info, "CostumeInfo"));
             CostumeInfo = costume["Costume"];
             HairInfo = costume["Hair"];
+            ODMInfo = costume["ODM"];
             EyeCount = costume["EyeCount"].AsInt;
             FaceCount = costume["FaceCount"].AsInt;
             GlassCount = costume["GlassCount"].AsInt;
             BackCount = costume["BackCount"].AsInt;
+            ODMCount = ODMInfo.Count;
             HatCount = costume["HatCount"].AsInt;
             HeadCount = costume["HeadCount"].AsInt;
             CostumeMCount = CostumeInfo["Male"].Count;
@@ -131,8 +136,8 @@ namespace Characters
             _mount_head_decor = head.gameObject;
             _mount_chest = CreateMount("spine/chest");
             _mount_3dmg = CreateMount("spine/chest");
-            _mount_gas_l = CreateMount("thigh_L");
-            _mount_gas_r = CreateMount("thigh_R");
+            _mount_gas_l = CreateMount("spine");
+            _mount_gas_r = CreateMount("spine");
             _mount_gun_mag_l = CreateMount("thigh_L");
             _mount_gun_mag_r = CreateMount("thigh_R");
             _mount_weapon_l = CreateMount("spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L");
@@ -201,6 +206,7 @@ namespace Characters
                 CurrentCostume = CostumeInfo["Female"][CustomSet.Costume.Value];
             }
             string hair = CustomSet.Hair.Value;
+            CurrentODM = ODMInfo[CustomSet.ODMType.Value];
             if (hair.StartsWith("HairM"))
                 CurrentHair = HairInfo["Male"][int.Parse(hair.Substring(5))];
             else if (hair.StartsWith("HairF"))
@@ -308,7 +314,7 @@ namespace Characters
             }
             _part_gas_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, _meshes.GetGasMesh(left: true), cached: true);
             _part_gas_l.GetComponent<Renderer>().material = material;
-            if(Weapon == HumanWeapon.Blade)
+            if(Weapon == HumanWeapon.Blade && CurrentODM["Type"] == "Second Gen ODM")
             {
                 _part_heldBlade1_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeL1", cached: true);
                 _part_heldBlade2_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeL2", cached: true);
@@ -316,12 +322,12 @@ namespace Characters
                 _part_heldBlade1_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeR1", cached: true);
                 _part_heldBlade2_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeR2", cached: true);
                 _part_heldBlade3_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeR3", cached: true);
-                AttachToMount(_part_heldBlade1_l, _mount_gas_l);
-                AttachToMount(_part_heldBlade2_l, _mount_gas_l);
-                AttachToMount(_part_heldBlade3_l, _mount_gas_l);
-                AttachToMount(_part_heldBlade1_r, _mount_gas_r);
-                AttachToMount(_part_heldBlade2_r, _mount_gas_r);
-                AttachToMount(_part_heldBlade3_r, _mount_gas_r);
+                AttachToMount(_part_heldBlade1_l, _mount_gun_mag_l);
+                AttachToMount(_part_heldBlade2_l, _mount_gun_mag_l);
+                AttachToMount(_part_heldBlade3_l, _mount_gun_mag_l);
+                AttachToMount(_part_heldBlade1_r, _mount_gun_mag_r);
+                AttachToMount(_part_heldBlade2_r, _mount_gun_mag_r);
+                AttachToMount(_part_heldBlade3_r, _mount_gun_mag_r);
                 _part_heldBlade1_l.GetComponent<Renderer>().material = material;
                 _part_heldBlade2_l.GetComponent<Renderer>().material = material;
                 _part_heldBlade3_l.GetComponent<Renderer>().material = material;
@@ -329,15 +335,15 @@ namespace Characters
                 _part_heldBlade2_r.GetComponent<Renderer>().material = material;
                 _part_heldBlade3_r.GetComponent<Renderer>().material = material;
             }
-            if (Weapon == HumanWeapon.AHSS || Weapon == HumanWeapon.APG)
+            if (Weapon == HumanWeapon.AHSS || Weapon == HumanWeapon.APG || CurrentODM["Type"] == "Second Gen ODM")
                 AttachToMount(_part_gas_l, _mount_gun_mag_l);
             else
                 AttachToMount(_part_gas_l, _mount_gas_l);
             _part_gas_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, _meshes.GetGasMesh(left: false), cached: true);
             _part_gas_r.GetComponent<Renderer>().material = material;
-            if (Weapon == HumanWeapon.AHSS || Weapon == HumanWeapon.APG)
+            if (Weapon == HumanWeapon.AHSS || Weapon == HumanWeapon.APG || CurrentODM["Type"] == "Second Gen ODM")
                 AttachToMount(_part_gas_r, _mount_gun_mag_r);
-            else
+            else 
                 AttachToMount(_part_gas_r, _mount_gas_r);
         }
 

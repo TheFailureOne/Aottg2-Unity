@@ -5,6 +5,16 @@
 	"BackCount": 3,
 	"HeadCount": 8,
 	"HatCount": 14,
+	"ODM": [
+		{
+			"Type": "First Gen ODM",
+			"Model": "scabbard"
+		},
+		{
+			"Type": "Second Gen ODM",
+			"Model": "scabbard1"
+		}
+	],
 	"Costume": {
 		"Male": [
 			{

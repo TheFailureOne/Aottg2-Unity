@@ -19,6 +19,8 @@ namespace Characters
                 return "Misc/aottg_hero_AHSS_3dmg";
             else if (_setup.Weapon == HumanWeapon.APG)
                 return "Misc/aottg_hero_APG_3dmg";
+            else if (_setup.CurrentODM["Type"] == "Second Gen ODM")
+                return "Misc/AOTTG_HERO_3DMGv2";
             return "Misc/AOTTG_HERO_3DMG";
         }
 

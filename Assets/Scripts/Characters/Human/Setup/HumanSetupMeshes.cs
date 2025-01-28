@@ -64,7 +64,7 @@ namespace Characters
         {
             if (_setup.Weapon == HumanWeapon.AHSS || _setup.Weapon == HumanWeapon.APG)
                 return AccessoriesPath + (left ? "char_gun_mag_l" : "char_gun_mag_r");
-            return AccessoriesPath + (left ? "scabbard_L" : "scabbard_R");
+            return AccessoriesPath + (left ? _setup.CurrentODM["Model"].Value + "_L" : _setup.CurrentODM["Model"].Value + "_R");
         }
 
         public string GetWeaponMesh(bool left)
