@@ -829,7 +829,7 @@ namespace Characters
         public void ResetHeldAmmo(bool isBlade)
         {
             if (isBlade) {
-                if (Setup.CurrentODM["Type"] == "Second Gen ODM") { 
+                if (Setup.CurrentScabbard["Type"] == "Second Gen Scabbard") { 
                     ToggleActive(Setup._part_heldBlade1_l, false);
                     ToggleActive(Setup._part_heldBlade1_r, false);
                     ToggleActive(Setup._part_heldBlade2_l, false);
@@ -852,7 +852,7 @@ namespace Characters
         public void ChangeHeldAmmo(int AmmoLeft, bool isBlade, bool isRemove)
         {
             if (isBlade) {
-                if (Setup.CurrentODM["Type"] == "Second Gen ODM") { 
+                if (Setup.CurrentScabbard["Type"] == "Second Gen Scabbard") { 
                     if (AmmoLeft == 2)
                     {
                         ToggleActive(Setup._part_heldBlade1_l, isRemove);

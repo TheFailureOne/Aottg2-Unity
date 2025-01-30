@@ -83,6 +83,9 @@ namespace UI
             options = GetOptions("Back", HumanSetup.BackCount, true);
             ElementFactory.CreateIconPickSetting(SinglePanel, style, set.Back, UIManager.GetLocale(cat, sub, "Back"), options, GetIcons(options),
                 UIManager.CurrentMenu.IconPickPopup, elementWidth: dropdownWidth, elementHeight: 40f, onSelect: () => _menu.ResetCharacter());
+            options = GetScabbardOptions();
+            ElementFactory.CreateIconPickSetting(SinglePanel, style, set.ScabbardType, UIManager.GetLocale(cat, sub, "ScabbardType"), options, GetIcons(options),
+                UIManager.CurrentMenu.IconPickPopup, elementWidth: dropdownWidth, elementHeight: 40f, onSelect: () => _menu.ResetCharacter());
             options = GetODMOptions();
             ElementFactory.CreateIconPickSetting(SinglePanel, style, set.ODMType, UIManager.GetLocale(cat, sub, "ODMType"), options, GetIcons(options),
                 UIManager.CurrentMenu.IconPickPopup, elementWidth: dropdownWidth, elementHeight: 40f, onSelect: () => _menu.ResetCharacter());
@@ -122,11 +125,18 @@ namespace UI
             return names.ToArray();
         }
 
+        private string[] GetScabbardOptions()
+        {
+            List<string> names = new List<string>();
+            for (int i = 0; i < HumanSetup.ScabbardCount; i++)
+                names.Add("Scabbard Gen " + (i+1).ToString());
+            return names.ToArray();
+        }
         private string[] GetODMOptions()
         {
             List<string> names = new List<string>();
             for (int i = 0; i < HumanSetup.ODMCount; i++)
-                names.Add("ODM Gen " + (i+1).ToString());
+                names.Add("ODM Gen " + (i + 1).ToString());
             return names.ToArray();
         }
 

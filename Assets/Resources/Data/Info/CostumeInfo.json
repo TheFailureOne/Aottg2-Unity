@@ -5,6 +5,16 @@
 	"BackCount": 3,
 	"HeadCount": 8,
 	"HatCount": 14,
+	"Scabbard": [
+		{
+			"Type": "First Gen Scabbard",
+			"Model": "scabbard"
+		},
+		{
+			"Type": "Second Gen Scabbard",
+			"Model": "scabbard1"
+		}
+	],
 	"ODM": [
 		{
 			"Type": "First Gen ODM",
@@ -22,7 +32,7 @@
 				"_main_tex": "Uniform_M_Straps_2",
 				"_main_tex_mask": "Uniform_M_Mask_2",
 				"_color_tex": "Uni_MB_Shirt_3",
-				"_pants_tex": "Boots_Uniform",
+				"_pants_tex": "Boots_Uniform"
 			},
 			{
 				"Type": "CasualB",
@@ -37,7 +47,7 @@
 				"_main_tex": "Uniform_M_Straps_3",
 				"_main_tex_mask": "Uniform_M_Mask_3",
 				"_color_tex": "Uni_MB_Shirt_2",
-				"_pants_tex": "Boots_Uniform",
+				"_pants_tex": "Boots_Uniform"
 			},
 			{
 				"Type": "CasualB",
@@ -52,7 +62,7 @@
 				"_main_tex": "Uniform_M_Straps_2",
 				"_main_tex_mask": "Uniform_M_Mask_2",
 				"_color_tex": "Uni_MB_Shirt_1",
-				"_pants_tex": "Boots_Uniform",
+				"_pants_tex": "Boots_Uniform"
 			},
 			{
 				"Type": "CasualB",
@@ -67,7 +77,7 @@
 				"_main_tex": "Uniform_M_Straps_1",
 				"_main_tex_mask": "Uniform_M_Mask_1",
 				"_color_tex": "Uni_MA_Shirt_2",
-				"_pants_tex": "Boots_Uniform",
+				"_pants_tex": "Boots_Uniform"
 			},
 			{
 				"Type": "CasualA",
@@ -82,7 +92,7 @@
 				"_main_tex": "Uniform_M_Straps_1",
 				"_main_tex_mask": "Uniform_M_Mask_1",
 				"_color_tex": "Uni_MA_Shirt_1",
-				"_pants_tex": "Boots_Uniform",
+				"_pants_tex": "Boots_Uniform"
 			},
 			{
 				"Type": "CasualA",
@@ -105,7 +115,7 @@
 				"_main_tex": "Casual_M_Straps_2",
 				"_main_tex_mask": "Casual_M_Mask_2",
 				"_color_tex": "MA_Shirt_3",
-				"_pants_tex": "Boots_AHSS",
+				"_pants_tex": "Boots_AHSS"
 			}
 		],
 		"Female": [
@@ -131,7 +141,7 @@
 				"_main_tex": "Uniform_F_Straps_3",
 				"_main_tex_mask": "Uniform_F_Mask_3",
 				"_color_tex": "Uni_FB_Shirt_2",
-				"_pants_tex": "Boots_Uniform",
+				"_pants_tex": "Boots_Uniform"
 			},
 			{
 				"Type": "UniformB",
@@ -155,7 +165,7 @@
 				"_main_tex": "Uniform_F_Straps_1",
 				"_main_tex_mask": "Uniform_F_Mask_1",
 				"_color_tex": "Uni_FA_Shirt_2",
-				"_pants_tex": "Boots_Uniform",
+				"_pants_tex": "Boots_Uniform"
 			},
 			{
 				"Type": "CasualA",
@@ -170,7 +180,7 @@
 				"_main_tex": "Uniform_F_Straps_1",
 				"_main_tex_mask": "Uniform_F_Mask_1",
 				"_color_tex": "Uni_FA_Shirt_1",
-				"_pants_tex": "Boots_Uniform",
+				"_pants_tex": "Boots_Uniform"
 			},
 			{
 				"Type": "CasualA",
@@ -193,7 +203,7 @@
 				"_main_tex": "Casual_F_Straps_2",
 				"_main_tex_mask": "Casual_F_Mask_2",
 				"_color_tex": "FA_Shirt_4",
-				"_pants_tex": "Boots_AHSS",
+				"_pants_tex": "Boots_AHSS"
 			}
 		]
 	},

@@ -14,6 +14,7 @@ namespace Characters
     {
         public static JSONNode CostumeInfo;
         public static JSONNode HairInfo;
+        public static JSONNode ScabbardInfo;
         public static JSONNode ODMInfo;
         public static Material WeaponTrailMaterial;
         public GameObject _mount_chest;
@@ -84,6 +85,7 @@ namespace Characters
         public HumanWeapon Weapon;
         public JSONNode CurrentCostume;
         public JSONNode CurrentHair;
+        public JSONNode CurrentScabbard;
         public JSONNode CurrentODM;
         public bool IsDeadBody;
         public bool Deleted = false;
@@ -97,6 +99,7 @@ namespace Characters
         public static int HairMCount;
         public static int HairFCount;
         public static int BackCount;
+        public static int ScabbardCount;
         public static int ODMCount;
         public static int HeadCount;
         public static int HatCount;
@@ -107,11 +110,13 @@ namespace Characters
             JSONNode costume = JSON.Parse(ResourceManager.TryLoadText(ResourcePaths.Info, "CostumeInfo"));
             CostumeInfo = costume["Costume"];
             HairInfo = costume["Hair"];
+            ScabbardInfo = costume["Scabbard"];
             ODMInfo = costume["ODM"];
             EyeCount = costume["EyeCount"].AsInt;
             FaceCount = costume["FaceCount"].AsInt;
             GlassCount = costume["GlassCount"].AsInt;
             BackCount = costume["BackCount"].AsInt;
+            ScabbardCount = ScabbardInfo.Count;
             ODMCount = ODMInfo.Count;
             HatCount = costume["HatCount"].AsInt;
             HeadCount = costume["HeadCount"].AsInt;
@@ -206,6 +211,7 @@ namespace Characters
                 CurrentCostume = CostumeInfo["Female"][CustomSet.Costume.Value];
             }
             string hair = CustomSet.Hair.Value;
+            CurrentScabbard = ScabbardInfo[CustomSet.ScabbardType.Value];
             CurrentODM = ODMInfo[CustomSet.ODMType.Value];
             if (hair.StartsWith("HairM"))
                 CurrentHair = HairInfo["Male"][int.Parse(hair.Substring(5))];
@@ -301,7 +307,7 @@ namespace Characters
             DestroyIfExists(_part_belt);
             DestroyIfExists(_part_gas_l);
             DestroyIfExists(_part_gas_r);
-            Material material = HumanSetupMaterials.GetPartMaterial(_textures.Get3dmgTexture());
+            Material material = HumanSetupMaterials.GetPartMaterial(_textures.GetODMTexture());
             _part_3dmg = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, _meshes.Get3dmgMesh(), cached: true);
             AttachToMount(_part_3dmg, _mount_3dmg);
             _part_3dmg.GetComponent<Renderer>().material = material;
@@ -312,9 +318,10 @@ namespace Characters
                 _part_belt.GetComponent<Renderer>().material = material;
                 AttachToMount(_part_belt, _mount_3dmg);
             }
+            material = HumanSetupMaterials.GetPartMaterial(_textures.Get3dmgTexture());
             _part_gas_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, _meshes.GetGasMesh(left: true), cached: true);
             _part_gas_l.GetComponent<Renderer>().material = material;
-            if(Weapon == HumanWeapon.Blade && CurrentODM["Type"] == "Second Gen ODM")
+            if(Weapon == HumanWeapon.Blade && CurrentScabbard["Type"] == "Second Gen Scabbard")
             {
                 _part_heldBlade1_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeL1", cached: true);
                 _part_heldBlade2_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeL2", cached: true);
@@ -335,13 +342,13 @@ namespace Characters
                 _part_heldBlade2_r.GetComponent<Renderer>().material = material;
                 _part_heldBlade3_r.GetComponent<Renderer>().material = material;
             }
-            if (Weapon == HumanWeapon.AHSS || Weapon == HumanWeapon.APG || CurrentODM["Type"] == "Second Gen ODM")
+            if (Weapon == HumanWeapon.AHSS || Weapon == HumanWeapon.APG || CurrentScabbard["Type"] == "Second Gen Scabbard")
                 AttachToMount(_part_gas_l, _mount_gun_mag_l);
             else
                 AttachToMount(_part_gas_l, _mount_gas_l);
             _part_gas_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, _meshes.GetGasMesh(left: false), cached: true);
             _part_gas_r.GetComponent<Renderer>().material = material;
-            if (Weapon == HumanWeapon.AHSS || Weapon == HumanWeapon.APG || CurrentODM["Type"] == "Second Gen ODM")
+            if (Weapon == HumanWeapon.AHSS || Weapon == HumanWeapon.APG || CurrentScabbard["Type"] == "Second Gen Scabbard")
                 AttachToMount(_part_gas_r, _mount_gun_mag_r);
             else 
                 AttachToMount(_part_gas_r, _mount_gas_r);

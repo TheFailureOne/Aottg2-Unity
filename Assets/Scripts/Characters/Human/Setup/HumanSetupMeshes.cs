@@ -52,19 +52,19 @@ namespace Characters
 
         public string Get3dmgMesh()
         {
-            return AccessoriesPath + ((_setup.Weapon == HumanWeapon.AHSS || _setup.Weapon == HumanWeapon.APG || _setup.Weapon == HumanWeapon.Thunderspear) ? "3dmg_2" : "3dmg");
+            return AccessoriesPath + ((_setup.Weapon == HumanWeapon.AHSS || _setup.Weapon == HumanWeapon.APG || _setup.Weapon == HumanWeapon.Thunderspear || _setup.CurrentODM["Type"] == "Second Gen ODM") ? "3dmg_2" : "3dmg");
         }
 
         public string GetBeltMesh()
         {
-            return  (_setup.Weapon == HumanWeapon.AHSS || _setup.Weapon == HumanWeapon.APG || _setup.Weapon == HumanWeapon.Thunderspear) ? string.Empty : AccessoriesPath + "3dmg_belt";
+            return  (_setup.Weapon == HumanWeapon.AHSS || _setup.Weapon == HumanWeapon.APG || _setup.Weapon == HumanWeapon.Thunderspear || _setup.CurrentODM["Type"] == "Second Gen ODM") ? string.Empty : AccessoriesPath + "3dmg_belt";
         }
 
         public string GetGasMesh(bool left)
         {
             if (_setup.Weapon == HumanWeapon.AHSS || _setup.Weapon == HumanWeapon.APG)
                 return AccessoriesPath + (left ? "char_gun_mag_l" : "char_gun_mag_r");
-            return AccessoriesPath + (left ? _setup.CurrentODM["Model"].Value + "_L" : _setup.CurrentODM["Model"].Value + "_R");
+            return AccessoriesPath + (left ? _setup.CurrentScabbard["Model"].Value + "_L" : _setup.CurrentScabbard["Model"].Value + "_R");
         }
 
         public string GetWeaponMesh(bool left)
