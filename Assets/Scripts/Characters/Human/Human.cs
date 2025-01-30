@@ -812,6 +812,111 @@ namespace Characters
             ((InGameMenu)UIManager.CurrentMenu).HUDBottomHandler.Reload();
         }
 
+        public void ToggleActive(GameObject obj,  bool active)
+        {
+            if (active)
+            {
+                obj.SetActive(false);
+                return;
+            }
+            else
+            {
+                obj.SetActive(true);
+                return;
+            }
+        }
+
+        public void ResetHeldAmmo(bool isBlade)
+        {
+            if (isBlade) {
+                if (Setup.CurrentScabbard["Type"] == "Second Gen Scabbard") { 
+                    ToggleActive(Setup._part_heldBlade1_l, false);
+                    ToggleActive(Setup._part_heldBlade1_r, false);
+                    ToggleActive(Setup._part_heldBlade2_l, false);
+                    ToggleActive(Setup._part_heldBlade2_r, false);
+                    ToggleActive(Setup._part_heldBlade3_l, false);
+                    ToggleActive(Setup._part_heldBlade3_r, false);
+                }
+            }
+            else
+            {
+                ToggleActive(Setup._part_tsStandBy3_l, false);
+                ToggleActive(Setup._part_tsStandBy3_r, false);
+                ToggleActive(Setup._part_tsStandBy2_l, false);
+                ToggleActive(Setup._part_tsStandBy2_r, false);
+                ToggleActive(Setup._part_tsStandBy1_l, false);
+                ToggleActive(Setup._part_tsStandBy1_r, false);
+            }
+        }
+
+        public void ChangeHeldAmmo(int AmmoLeft, bool isBlade, bool isRemove)
+        {
+            if (isBlade) {
+                if (Setup.CurrentScabbard["Type"] == "Second Gen Scabbard") { 
+                    if (AmmoLeft == 2)
+                    {
+                        ToggleActive(Setup._part_heldBlade1_l, isRemove);
+                        ToggleActive(Setup._part_heldBlade1_r, isRemove);
+                    }
+                    else if (AmmoLeft == 1)
+                    {
+                        ToggleActive(Setup._part_heldBlade1_l, isRemove);
+                        ToggleActive(Setup._part_heldBlade1_r, isRemove);
+                        ToggleActive(Setup._part_heldBlade2_l, isRemove);
+                        ToggleActive(Setup._part_heldBlade2_r, isRemove);
+                    }
+                    else if (AmmoLeft == 0)
+                    {
+                        ToggleActive(Setup._part_heldBlade1_l, isRemove);
+                        ToggleActive(Setup._part_heldBlade1_r, isRemove);
+                        ToggleActive(Setup._part_heldBlade2_l, isRemove);
+                        ToggleActive(Setup._part_heldBlade2_r, isRemove);
+                        ToggleActive(Setup._part_heldBlade3_l, isRemove);
+                        ToggleActive(Setup._part_heldBlade3_r, isRemove);
+                    }
+                }
+            }
+            else{
+                switch (AmmoLeft)
+                {
+                    case 7:
+                        ToggleActive(Setup._part_tsStandBy3_l, isRemove);
+                        break;
+                    case 6:
+                        ToggleActive(Setup._part_tsStandBy3_l, isRemove);
+                        ToggleActive(Setup._part_tsStandBy3_r, isRemove);
+                        break;
+                    case 5:
+                        ToggleActive(Setup._part_tsStandBy3_l, isRemove);
+                        ToggleActive(Setup._part_tsStandBy3_r, isRemove);
+                        ToggleActive(Setup._part_tsStandBy2_l, isRemove);
+                        break;
+                    case 4:
+                        ToggleActive(Setup._part_tsStandBy3_l, isRemove);
+                        ToggleActive(Setup._part_tsStandBy3_r, isRemove);
+                        ToggleActive(Setup._part_tsStandBy2_l, isRemove);
+                        ToggleActive(Setup._part_tsStandBy2_r, isRemove);
+                        break;
+                    case 3:
+                        ToggleActive(Setup._part_tsStandBy3_l, isRemove);
+                        ToggleActive(Setup._part_tsStandBy3_r, isRemove);
+                        ToggleActive(Setup._part_tsStandBy2_l, isRemove);
+                        ToggleActive(Setup._part_tsStandBy2_r, isRemove);
+                        ToggleActive(Setup._part_tsStandBy1_l, isRemove);
+                        break;
+                    case 2:
+                        ToggleActive(Setup._part_tsStandBy3_l, isRemove);
+                        ToggleActive(Setup._part_tsStandBy3_r, isRemove);
+                        ToggleActive(Setup._part_tsStandBy2_l, isRemove);
+                        ToggleActive(Setup._part_tsStandBy2_r, isRemove);
+                        ToggleActive(Setup._part_tsStandBy1_l, isRemove);
+                        ToggleActive(Setup._part_tsStandBy1_r, isRemove);
+                        break;
+                }
+
+            }
+        }
+
         protected void FinishReload()
         {
             if (!_needFinishReload)
@@ -838,11 +943,27 @@ namespace Characters
             if (Special is ThunderspearWeapon)
             {
                 ((ThunderspearWeapon)Special).Reset();
+                var weapon = (ThunderspearWeapon)Special;
+                ResetHeldAmmo(false);
+                ChangeHeldAmmo(weapon.MaxAmmo, false, true);
+                Debug.Log(weapon.MaxAmmo);
             }
             ToggleSparks(false);
             CrossFade(HumanAnimations.Refill, 0.1f);
             PlaySound(HumanSounds.Refill);
             _stateTimeLeft = Cache.Animation[HumanAnimations.Refill].length / Cache.Animation[HumanAnimations.Refill].speed;
+            if (Weapon is ThunderspearWeapon)
+            {
+                var weapon = (ThunderspearWeapon)Weapon;
+                ResetHeldAmmo(false);
+                ChangeHeldAmmo(weapon.MaxAmmo, false, true);
+            }
+            else if(Weapon is BladeWeapon)
+            {
+                var weapon = (BladeWeapon)Weapon;
+                ResetHeldAmmo(true);
+                ChangeHeldAmmo(weapon.MaxBlades, true, true);
+            }
             return true;
         }
         public bool SupplySpawnableRefill()
@@ -885,6 +1006,7 @@ namespace Characters
                 return;
             if (Weapon is BladeWeapon)
             {
+                var weapon = (BladeWeapon)Weapon;
                 ToggleBlades(true);
             }
             Weapon.Reset();
@@ -3428,6 +3550,12 @@ namespace Characters
                 AddRendererIfExists(renderers, Setup._part_hair_1);
                 AddRendererIfExists(renderers, Setup._part_cape);
                 AddRendererIfExists(renderers, Setup._part_chest_3);
+                AddRendererIfExists(renderers, Setup._part_heldBlade1_l);
+                AddRendererIfExists(renderers, Setup._part_heldBlade2_l);
+                AddRendererIfExists(renderers, Setup._part_heldBlade3_l);
+                AddRendererIfExists(renderers, Setup._part_heldBlade1_r);
+                AddRendererIfExists(renderers, Setup._part_heldBlade2_r);
+                AddRendererIfExists(renderers, Setup._part_heldBlade3_r);
             }
             return renderers;
         }

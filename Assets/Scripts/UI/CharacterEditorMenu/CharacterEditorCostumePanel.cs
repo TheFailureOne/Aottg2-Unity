@@ -83,6 +83,12 @@ namespace UI
             options = GetOptions("Back", HumanSetup.BackCount, true);
             ElementFactory.CreateIconPickSetting(SinglePanel, style, set.Back, UIManager.GetLocale(cat, sub, "Back"), options, GetIcons(options),
                 UIManager.CurrentMenu.IconPickPopup, elementWidth: dropdownWidth, elementHeight: 40f, onSelect: () => _menu.ResetCharacter());
+            options = GetScabbardOptions();
+            ElementFactory.CreateIconPickSetting(SinglePanel, style, set.ScabbardType, UIManager.GetLocale(cat, sub, "ScabbardType"), options, GetIcons(options),
+                UIManager.CurrentMenu.IconPickPopup, elementWidth: dropdownWidth, elementHeight: 40f, onSelect: () => _menu.ResetCharacter());
+            options = GetODMOptions();
+            ElementFactory.CreateIconPickSetting(SinglePanel, style, set.ODMType, UIManager.GetLocale(cat, sub, "ODMType"), options, GetIcons(options),
+                UIManager.CurrentMenu.IconPickPopup, elementWidth: dropdownWidth, elementHeight: 40f, onSelect: () => _menu.ResetCharacter());
             ElementFactory.CreateColorSetting(SinglePanel, style, set.SkinColor, UIManager.GetLocale(cat, sub, "SkinColor"), UIManager.CurrentMenu.ColorPickPopup,
                 onChangeColor: () => _menu.ResetCharacter());
             ElementFactory.CreateColorSetting(SinglePanel, style, set.HairColor, UIManager.GetLocale(cat, sub, "HairColor"), UIManager.CurrentMenu.ColorPickPopup,
@@ -116,6 +122,21 @@ namespace UI
                 names.Add("HairM" + i.ToString());
             for (int i = 0; i < HumanSetup.HairFCount; i++)
                 names.Add("HairF" + i.ToString());
+            return names.ToArray();
+        }
+
+        private string[] GetScabbardOptions()
+        {
+            List<string> names = new List<string>();
+            for (int i = 0; i < HumanSetup.ScabbardCount; i++)
+                names.Add("Scabbard Gen " + (i+1).ToString());
+            return names.ToArray();
+        }
+        private string[] GetODMOptions()
+        {
+            List<string> names = new List<string>();
+            for (int i = 0; i < HumanSetup.ODMCount; i++)
+                names.Add("ODM Gen " + (i + 1).ToString());
             return names.ToArray();
         }
 

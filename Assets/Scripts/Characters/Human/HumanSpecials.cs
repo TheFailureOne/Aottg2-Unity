@@ -1,5 +1,6 @@
 ﻿using CustomLogic;
 using GameManagers;
+using Settings;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -91,7 +92,7 @@ namespace Characters
             "Armored" => new ShifterTransformSpecial(owner, "Armored"),
             "Switchback" => new SwitchbackSpecial(owner),
             "Confuse" => new ConfuseSpecial(owner),
-            "Thunderspears" => new ThunderspearWeapon(owner, 2, 2, CharacterData.HumanWeaponInfo["Thunderspear"]["CD"].AsFloat, 1.5f, CharacterData.HumanWeaponInfo["Thunderspear"]["Speed"].AsFloat, (CharacterData.HumanWeaponInfo["Thunderspear"]["Range"].AsFloat / CharacterData.HumanWeaponInfo["Thunderspear"]["Speed"].AsFloat), CharacterData.HumanWeaponInfo["Thunderspear"]["Delay"].AsFloat, CharacterData.HumanWeaponInfo["Thunderspear"]),
+            "Thunderspears" => new ThunderspearWeapon(owner, SettingsManager.InGameCurrent.Misc.TSSpecial.Value, SettingsManager.InGameCurrent.Misc.TSSpecial.Value, CharacterData.HumanWeaponInfo["Thunderspear"]["CD"].AsFloat, 1.5f, CharacterData.HumanWeaponInfo["Thunderspear"]["Speed"].AsFloat, (CharacterData.HumanWeaponInfo["Thunderspear"]["Range"].AsFloat / CharacterData.HumanWeaponInfo["Thunderspear"]["Speed"].AsFloat), CharacterData.HumanWeaponInfo["Thunderspear"]["Delay"].AsFloat, CharacterData.HumanWeaponInfo["Thunderspear"]),
             _ => null
         };
 

@@ -99,13 +99,21 @@ namespace CustomSkins
                     AddRendererIfExists(renderers, human.Setup._part_3dmg);
                     AddRendererIfExists(renderers, human.Setup._part_belt);
                     AddRendererIfExists(renderers, human.Setup._part_gas_l);
-                    if (human.Setup.Weapon != HumanWeapon.Thunderspear)
+                    if (human.Setup.Weapon != HumanWeapon.Thunderspear) { 
                         AddRendererIfExists(renderers, human.Setup._part_blade_l);
+                        AddRendererIfExists(renderers, human.Setup._part_heldBlade1_l);
+                        AddRendererIfExists(renderers, human.Setup._part_heldBlade2_l);
+                        AddRendererIfExists(renderers, human.Setup._part_heldBlade3_l);
+                    }
                     return new BaseCustomSkinPart(this, renderers, GetRendererId(partId), MaxSizeMedium, useTransparentMaterial: true);
                 case HumanCustomSkinPartId.GearR:
                     AddRendererIfExists(renderers, human.Setup._part_gas_r);
-                    if (human.Setup.Weapon != HumanWeapon.Thunderspear)
+                    if (human.Setup.Weapon != HumanWeapon.Thunderspear) { 
                         AddRendererIfExists(renderers, human.Setup._part_blade_r);
+                        AddRendererIfExists(renderers, human.Setup._part_heldBlade1_r);
+                        AddRendererIfExists(renderers, human.Setup._part_heldBlade2_r);
+                        AddRendererIfExists(renderers, human.Setup._part_heldBlade3_r);
+                    }
                     return new BaseCustomSkinPart(this, renderers, GetRendererId(partId), MaxSizeMedium, useTransparentMaterial: true);
                 case HumanCustomSkinPartId.Gas:
                     AddRendererIfExists(renderers, human.transform.Find("3dmg_smoke").gameObject);

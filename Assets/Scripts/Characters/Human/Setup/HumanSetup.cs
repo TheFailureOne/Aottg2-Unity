@@ -13,6 +13,8 @@ namespace Characters
     {
         public static JSONNode CostumeInfo;
         public static JSONNode HairInfo;
+        public static JSONNode ScabbardInfo;
+        public static JSONNode ODMInfo;
         public static Material WeaponTrailMaterial;
         public GameObject _mount_chest;
         public GameObject _mount_3dmg;
@@ -34,6 +36,18 @@ namespace Characters
         public GameObject _part_arm_l;
         public GameObject _part_arm_r;
         public GameObject _part_blade_l;
+        public GameObject _part_heldBlade1_l;
+        public GameObject _part_heldBlade2_l;
+        public GameObject _part_heldBlade3_l;
+        public GameObject _part_heldBlade1_r;
+        public GameObject _part_heldBlade2_r;
+        public GameObject _part_heldBlade3_r;
+        public GameObject _part_tsStandBy1_l;
+        public GameObject _part_tsStandBy2_l;
+        public GameObject _part_tsStandBy3_l;
+        public GameObject _part_tsStandBy1_r;
+        public GameObject _part_tsStandBy2_r;
+        public GameObject _part_tsStandBy3_r;
         public GameObject _part_blade_r;
         public GameObject _part_ts_l;
         public GameObject _part_ts_r;
@@ -70,6 +84,8 @@ namespace Characters
         public HumanWeapon Weapon;
         public JSONNode CurrentCostume;
         public JSONNode CurrentHair;
+        public JSONNode CurrentScabbard;
+        public JSONNode CurrentODM;
         public bool IsDeadBody;
         public bool Deleted = false;
 
@@ -82,6 +98,8 @@ namespace Characters
         public static int HairMCount;
         public static int HairFCount;
         public static int BackCount;
+        public static int ScabbardCount;
+        public static int ODMCount;
         public static int HeadCount;
         public static int HatCount;
         public static string Special;
@@ -91,10 +109,14 @@ namespace Characters
             JSONNode costume = JSON.Parse(ResourceManager.TryLoadText(ResourcePaths.Info, "CostumeInfo"));
             CostumeInfo = costume["Costume"];
             HairInfo = costume["Hair"];
+            ScabbardInfo = costume["Scabbard"];
+            ODMInfo = costume["ODM"];
             EyeCount = costume["EyeCount"].AsInt;
             FaceCount = costume["FaceCount"].AsInt;
             GlassCount = costume["GlassCount"].AsInt;
             BackCount = costume["BackCount"].AsInt;
+            ScabbardCount = ScabbardInfo.Count;
+            ODMCount = ODMInfo.Count;
             HatCount = costume["HatCount"].AsInt;
             HeadCount = costume["HeadCount"].AsInt;
             CostumeMCount = CostumeInfo["Male"].Count;
@@ -188,6 +210,8 @@ namespace Characters
                 CurrentCostume = CostumeInfo["Female"][CustomSet.Costume.Value];
             }
             string hair = CustomSet.Hair.Value;
+            CurrentScabbard = ScabbardInfo[CustomSet.ScabbardType.Value];
+            CurrentODM = ODMInfo[CustomSet.ODMType.Value];
             if (hair.StartsWith("HairM"))
                 CurrentHair = HairInfo["Male"][int.Parse(hair.Substring(5))];
             else if (hair.StartsWith("HairF"))
@@ -259,6 +283,21 @@ namespace Characters
             DestroyIfExists(_part_blade_r);
             DestroyIfExists(_part_ts_l);
             DestroyIfExists(_part_ts_r);
+<<<<<<< Thunderspears-Special
+            DestroyIfExists(_part_heldBlade1_l);
+            DestroyIfExists(_part_heldBlade1_r);
+            DestroyIfExists(_part_heldBlade2_l);
+            DestroyIfExists(_part_heldBlade2_r);
+            DestroyIfExists(_part_heldBlade3_l);
+            DestroyIfExists(_part_heldBlade3_r);
+            DestroyIfExists(_part_tsStandBy1_l);
+            DestroyIfExists(_part_tsStandBy1_r);
+            DestroyIfExists(_part_tsStandBy2_l);
+            DestroyIfExists(_part_tsStandBy2_r);
+            DestroyIfExists(_part_tsStandBy3_l);
+            DestroyIfExists(_part_tsStandBy3_r);
+=======
+>>>>>>> main
             DestroyIfExists(_part_back);
             DestroyIfExists(_part_hat);
             DestroyIfExists(_part_head_decor);
@@ -270,7 +309,7 @@ namespace Characters
             DestroyIfExists(_part_belt);
             DestroyIfExists(_part_gas_l);
             DestroyIfExists(_part_gas_r);
-            Material material = HumanSetupMaterials.GetPartMaterial(_textures.Get3dmgTexture());
+            Material material = HumanSetupMaterials.GetPartMaterial(_textures.GetODMTexture());
             _part_3dmg = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, _meshes.Get3dmgMesh(), cached: true);
             AttachToMount(_part_3dmg, _mount_3dmg);
             _part_3dmg.GetComponent<Renderer>().material = material;
@@ -281,17 +320,39 @@ namespace Characters
                 _part_belt.GetComponent<Renderer>().material = material;
                 AttachToMount(_part_belt, _mount_3dmg);
             }
+            material = HumanSetupMaterials.GetPartMaterial(_textures.Get3dmgTexture());
             _part_gas_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, _meshes.GetGasMesh(left: true), cached: true);
             _part_gas_l.GetComponent<Renderer>().material = material;
-            if (Weapon == HumanWeapon.AHSS || Weapon == HumanWeapon.APG)
+            if(Weapon == HumanWeapon.Blade && CurrentScabbard["Type"] == "Second Gen Scabbard")
+            {
+                _part_heldBlade1_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeL1", cached: true);
+                _part_heldBlade2_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeL2", cached: true);
+                _part_heldBlade3_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeL3", cached: true);
+                _part_heldBlade1_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeR1", cached: true);
+                _part_heldBlade2_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeR2", cached: true);
+                _part_heldBlade3_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/bladeR3", cached: true);
+                AttachToMount(_part_heldBlade1_l, _mount_gun_mag_l);
+                AttachToMount(_part_heldBlade2_l, _mount_gun_mag_l);
+                AttachToMount(_part_heldBlade3_l, _mount_gun_mag_l);
+                AttachToMount(_part_heldBlade1_r, _mount_gun_mag_r);
+                AttachToMount(_part_heldBlade2_r, _mount_gun_mag_r);
+                AttachToMount(_part_heldBlade3_r, _mount_gun_mag_r);
+                _part_heldBlade1_l.GetComponent<Renderer>().material = material;
+                _part_heldBlade2_l.GetComponent<Renderer>().material = material;
+                _part_heldBlade3_l.GetComponent<Renderer>().material = material;
+                _part_heldBlade1_r.GetComponent<Renderer>().material = material;
+                _part_heldBlade2_r.GetComponent<Renderer>().material = material;
+                _part_heldBlade3_r.GetComponent<Renderer>().material = material;
+            }
+            if (Weapon == HumanWeapon.AHSS || Weapon == HumanWeapon.APG || CurrentScabbard["Type"] == "Second Gen Scabbard")
                 AttachToMount(_part_gas_l, _mount_gun_mag_l);
             else
                 AttachToMount(_part_gas_l, _mount_gas_l);
             _part_gas_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, _meshes.GetGasMesh(left: false), cached: true);
             _part_gas_r.GetComponent<Renderer>().material = material;
-            if (Weapon == HumanWeapon.AHSS || Weapon == HumanWeapon.APG)
+            if (Weapon == HumanWeapon.AHSS || Weapon == HumanWeapon.APG || CurrentScabbard["Type"] == "Second Gen Scabbard")
                 AttachToMount(_part_gas_r, _mount_gun_mag_r);
-            else
+            else 
                 AttachToMount(_part_gas_r, _mount_gas_r);
         }
 
@@ -306,10 +367,38 @@ namespace Characters
             if (weaponLMesh != string.Empty)
             {
                 _part_blade_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, weaponLMesh, cached: true);
-                if(Special == "Thunderspears")
+                if (Special == "Thunderspears")
+                {
                     _part_ts_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Weapons/Prefabs/thunderspear_l", cached: true);
-                if (weaponLMesh.Contains("thunderspear"))
+                    _part_tsStandBy1_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_3", cached: true);
+                    _part_tsStandBy1_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_4", cached: true);
+                    _part_tsStandBy2_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_5", cached: true);
+                    _part_tsStandBy2_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_6", cached: true);
+                    _part_tsStandBy3_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_7", cached: true);
+                    _part_tsStandBy3_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_8", cached: true);
+                    AttachToMount(_part_tsStandBy1_l, _mount_ts_l);
+                    AttachToMount(_part_tsStandBy1_r, _mount_ts_r);
+                    AttachToMount(_part_tsStandBy2_l, _mount_ts_l);
+                    AttachToMount(_part_tsStandBy2_r, _mount_ts_r);
+                    AttachToMount(_part_tsStandBy3_l, _mount_ts_l);
+                    AttachToMount(_part_tsStandBy3_r, _mount_ts_r);
+
+                }
+                if (weaponLMesh.Contains("thunderspear")) { 
                     AttachToMount(_part_blade_l, _mount_ts_l);
+                    _part_tsStandBy1_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_3", cached: true);
+                    _part_tsStandBy1_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_4", cached: true);
+                    _part_tsStandBy2_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_5", cached: true);
+                    _part_tsStandBy2_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_6", cached: true);
+                    _part_tsStandBy3_l = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_7", cached: true);
+                    _part_tsStandBy3_r = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Characters, "Human/Parts/Accessories/Prefabs/thunderspear_8", cached: true);
+                    AttachToMount(_part_tsStandBy1_l, _mount_ts_l);
+                    AttachToMount(_part_tsStandBy1_r, _mount_ts_r);
+                    AttachToMount(_part_tsStandBy2_l, _mount_ts_l);
+                    AttachToMount(_part_tsStandBy2_r, _mount_ts_r);
+                    AttachToMount(_part_tsStandBy3_l, _mount_ts_l);
+                    AttachToMount(_part_tsStandBy3_r, _mount_ts_r);
+                }
                 else
                 {
                     AttachToMount(_part_blade_l, _mount_weapon_l);
