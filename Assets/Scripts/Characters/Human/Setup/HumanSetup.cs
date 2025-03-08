@@ -283,7 +283,6 @@ namespace Characters
             DestroyIfExists(_part_blade_r);
             DestroyIfExists(_part_ts_l);
             DestroyIfExists(_part_ts_r);
-<<<<<<< Thunderspears-Special
             DestroyIfExists(_part_heldBlade1_l);
             DestroyIfExists(_part_heldBlade1_r);
             DestroyIfExists(_part_heldBlade2_l);
@@ -296,8 +295,6 @@ namespace Characters
             DestroyIfExists(_part_tsStandBy2_r);
             DestroyIfExists(_part_tsStandBy3_l);
             DestroyIfExists(_part_tsStandBy3_r);
-=======
->>>>>>> main
             DestroyIfExists(_part_back);
             DestroyIfExists(_part_hat);
             DestroyIfExists(_part_head_decor);
